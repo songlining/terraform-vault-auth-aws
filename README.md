@@ -1,4 +1,4 @@
-# Terraform Vault AWS Authentication Module
+# Terraform Vault AWS IAM Authentication Demo Module
 
 This module is for demonstration purpose.  It showcases how vault agent authenticates to vault server with AWS IAM, as documented in https://developer.hashicorp.com/vault/docs/auth/aws .
 
