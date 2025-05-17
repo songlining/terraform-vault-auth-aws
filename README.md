@@ -1,6 +1,6 @@
-# Terraform Vault AWS IAM Authentication Demo Module
+# Vault AWS IAM Authentication Demo Module
 
-This module is for demonstration purpose.  It showcases how vault agent authenticates to vault server with AWS IAM, as documented in https://developer.hashicorp.com/vault/docs/auth/aws .
+This terraform module is for demonstration purpose.  It showcases how vault agent authenticates to vault server with AWS IAM, as documented in https://developer.hashicorp.com/vault/docs/auth/aws .
 
 ## Architecture
 
@@ -30,30 +30,23 @@ module "vault_aws_auth" {
 }
 ```
 
-## Deployment Process
-
-1. The module creates the necessary AWS infrastructure (VPC, subnet, security groups)
-2. Deploys two EC2 instances with the required IAM roles
-3. Installs and configures Vault server on the first instance
-4. Installs and configures Vault Agent on the second instance
-5. Sets up AWS IAM authentication between the two
-
 ## Vault Server Setup
 
 The Vault server is configured with:
 - TCP listener on port 8200 (TLS disabled for demonstration)
 - Automatic initialization and unsealing
 - Enabled audit logging
-- Configured AWS authentication method
-- Pre-configured policies for secure access
+- Configured AWS IAM authentication method, with pre-configured roles/policies
 - database, pki and ssh secrets engines enabled
 - kv access policy enabled for the agent role for testing purpose
+- systemd service enabled
 
 ## Vault Agent Setup
 
 The Vault Agent is configured to:
-- Authenticate to the Vault server using AWS IAM credentials
-- VAULT_ADDR and VAULT_TOKEN environment variables are set in root's .bashrc 
+- Authenticate to the Vault server using an IAM role
+- VAULT_ADDR and VAULT_TOKEN environment variables are set in root's .bashrc
+- systemd service enabled
 
 ## Variables
 
