@@ -9,6 +9,8 @@ terraform {
       version = "~> 4.0"
     }
   }
+  cloud {
+  }
 }
 
 provider "aws" {
