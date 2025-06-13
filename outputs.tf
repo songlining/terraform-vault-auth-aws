@@ -15,12 +15,12 @@ output "vault_agent_public_ip" {
 
 output "server_a_key_name" {
   description = "Name of the key pair for server-a"
-  value       = aws_key_pair.server_a_key_pair.key_name
+  value       = module.server_a_key_pair.key_pair_name
 }
 
 output "server_b_key_name" {
   description = "Name of the key pair for server-b"
-  value       = aws_key_pair.server_b_key_pair.key_name
+  value       = module.server_b_key_pair.key_pair_name
 }
 
 output "server_a_key_file" {

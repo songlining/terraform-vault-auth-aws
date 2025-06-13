@@ -17,32 +17,24 @@ provider "aws" {
 
 data "aws_caller_identity" "current" {}
 
-# Generate RSA key for server-a
-resource "tls_private_key" "server_a_key" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
+# Create AWS key pair for server-a using module
+module "server_a_key_pair" {
+  source = "terraform-aws-modules/key-pair/aws"
 
-# Create AWS key pair for server-a
-resource "aws_key_pair" "server_a_key_pair" {
-  key_name   = "server-a-key"
-  public_key = tls_private_key.server_a_key.public_key_openssh
+  key_name           = "server-a-key"
+  create_private_key = true
 
   tags = {
     Name = "server-a-key"
   }
 }
 
-# Generate RSA key for server-b
-resource "tls_private_key" "server_b_key" {
-  algorithm = "RSA"
-  rsa_bits  = 4096
-}
+# Create AWS key pair for server-b using module
+module "server_b_key_pair" {
+  source = "terraform-aws-modules/key-pair/aws"
 
-# Create AWS key pair for server-b
-resource "aws_key_pair" "server_b_key_pair" {
-  key_name   = "server-b-key"
-  public_key = tls_private_key.server_b_key.public_key_openssh
+  key_name           = "server-b-key"
+  create_private_key = true
 
   tags = {
     Name = "server-b-key"
@@ -273,7 +265,7 @@ resource "aws_instance" "server_a" {
   subnet_id              = aws_subnet.vault_subnet.id
   vpc_security_group_ids = [aws_security_group.vault_server_sg.id]
   iam_instance_profile   = aws_iam_instance_profile.vault_server_profile.name
-  key_name               = aws_key_pair.server_a_key_pair.key_name
+  key_name               = module.server_a_key_pair.key_pair_name
 
   user_data = templatefile("${path.module}/scripts/vault_server_setup.sh", {
     vault_version = var.vault_version
@@ -292,7 +284,7 @@ resource "aws_instance" "server_b" {
   subnet_id              = aws_subnet.vault_subnet.id
   vpc_security_group_ids = [aws_security_group.vault_agent_sg.id]
   iam_instance_profile   = aws_iam_instance_profile.vault_agent_profile.name
-  key_name               = aws_key_pair.server_b_key_pair.key_name
+  key_name               = module.server_b_key_pair.key_pair_name
 
   user_data = templatefile("${path.module}/scripts/vault_agent_setup.sh", {
     vault_version = var.vault_version
@@ -308,13 +300,13 @@ resource "aws_instance" "server_b" {
 
 # Save private keys to local files
 resource "local_file" "server_a_private_key" {
-  content         = tls_private_key.server_a_key.private_key_pem
+  content         = module.server_a_key_pair.private_key_pem
   filename        = "${path.module}/server-a-key.pem"
   file_permission = "0600"
 }
 
 resource "local_file" "server_b_private_key" {
-  content         = tls_private_key.server_b_key.private_key_pem
+  content         = module.server_b_key_pair.private_key_pem
   filename        = "${path.module}/server-b-key.pem"
   file_permission = "0600"
 }
