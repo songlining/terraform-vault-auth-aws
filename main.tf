@@ -19,7 +19,8 @@ data "aws_caller_identity" "current" {}
 
 # Create AWS key pair for server-a using module
 module "server_a_key_pair" {
-  source = "terraform-aws-modules/key-pair/aws"
+  source = "app.terraform.io/lab-larry/key-pair/aws"
+  version = "2.1.0"
 
   key_name           = "server-a-key"
   create_private_key = true
@@ -31,8 +32,9 @@ module "server_a_key_pair" {
 
 # Create AWS key pair for server-b using module
 module "server_b_key_pair" {
-  source = "terraform-aws-modules/key-pair/aws"
-
+  source = "app.terraform.io/lab-larry/key-pair/aws"
+  version = "2.1.0"
+  
   key_name           = "server-b-key"
   create_private_key = true
 
