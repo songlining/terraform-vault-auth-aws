@@ -1,8 +1,10 @@
 # Basic example of using the Vault AWS authentication module
-
+terraform {
+  cloud {}
+}
 module "vault-agent-auth-role" {
   source  = "app.terraform.io/lab-larry/vault-agent-auth-role/aws"
-  version = "1.0.4"
+  version = "1.0.5"
 }
 
 output "vault_server_private_ip" {
