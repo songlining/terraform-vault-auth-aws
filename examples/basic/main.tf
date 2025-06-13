@@ -1,8 +1,8 @@
 # Basic example of using the Vault AWS authentication module
 
 module "vault_aws_auth" {
-  source = "../../"
-  
+  #source = "../../"
+  source = "git@github.com:songlining/terraform-aws-vault-agent-auth-role.git"
   # Using default values for simplicity
 }
 
