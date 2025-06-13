@@ -1,4 +1,7 @@
 # Basic example of using the Vault AWS authentication module
+terraform {
+  cloud {}
+}
 
 module "vault_aws_auth" {
   #source = "../../"
