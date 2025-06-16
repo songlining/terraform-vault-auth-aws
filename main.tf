@@ -264,7 +264,7 @@ resource "aws_iam_instance_profile" "vault_agent_profile" {
 # Create EC2 instance for Vault server (server-a)
 resource "aws_instance" "server_a" {
   ami                    = var.arm_ami_id
-  instance_type          = "t4g.small"  # ARM-based instance
+  instance_type          = var.instance_type
   subnet_id              = aws_subnet.vault_subnet.id
   vpc_security_group_ids = [aws_security_group.vault_server_sg.id]
   iam_instance_profile   = aws_iam_instance_profile.vault_server_profile.name
@@ -283,7 +283,7 @@ resource "aws_instance" "server_a" {
 # Create EC2 instance for Vault agent (server-b)
 resource "aws_instance" "server_b" {
   ami                    = var.arm_ami_id
-  instance_type          = "t4g.small"  # ARM-based instance
+  instance_type          = var.instance_type
   subnet_id              = aws_subnet.vault_subnet.id
   vpc_security_group_ids = [aws_security_group.vault_agent_sg.id]
   iam_instance_profile   = aws_iam_instance_profile.vault_agent_profile.name

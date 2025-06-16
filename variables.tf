@@ -21,3 +21,9 @@ variable "vault_version" {
   type        = string
   default     = "1.19.3"
 }
+
+variable "instance_type" {
+  description = "EC2 instance type"
+  type        = string
+  default     = "t4g.small"   # ARM-based instance by default
+}
