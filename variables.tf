@@ -1,7 +1,7 @@
 variable "aws_region" {
   description = "AWS region to deploy resources"
   type        = string
-  default     = "ap-southeast-2"
+  # default     = "ap-southeast-2"
 }
 
 variable "arm_ami_id" {
@@ -25,5 +25,5 @@ variable "vault_version" {
 variable "instance_type" {
   description = "EC2 instance type"
   type        = string
-  default     = "t4g.small"   # ARM-based instance by default
+  # default     = "t4g.small"   # ARM-based instance by default
 }
