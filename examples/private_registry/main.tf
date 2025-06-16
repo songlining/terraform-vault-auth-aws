@@ -4,7 +4,8 @@ terraform {
 }
 module "vault-agent-auth-role" {
   source  = "app.terraform.io/lab-larry/vault-agent-auth-role/aws"
-  version = "1.0.5"
+  #source = "git@github.com:songlining/terraform-aws-vault-agent-auth-role.git"
+  version = "1.0.6"
 }
 
 output "vault_server_private_ip" {
